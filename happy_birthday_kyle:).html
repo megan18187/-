@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      color: #fff;
+      background: #000;
+      height: 100%;
+      width: 100%;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    #candle {
+      margin-top: 50px;
+      width: 10px;
+      height: 100px;
+      background: white;
+      position: relative;
+      border-radius: 5px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.4);
+    }
+    #flame {
+      position: absolute;
+      top: -30px;
+      left: -10px;
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle, yellow 40%, orange 60%, transparent 100%);
+      border-radius: 50%;
+      animation: flicker 0.2s infinite;
+      transition: opacity 1s ease;
+    }
+    @keyframes flicker {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 24px;
+      animation: fadeIn 2s;
+      text-align: center;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .hearts {
+      color: pink;
+      font-size: 30px;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeInText 2s forwards;
+    }
+    @keyframes fadeInText {
+      to { opacity: 1; }
+    }
+    .headline {
+      font-family: 'Great Vibes', cursive;
+      font-size: 48px;
+      color: #fff;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .letter-container {
+      background: rgba(255,255,255,0.9);
+      color: #333;
+      padding: 30px;
+      margin: 20px auto;
+      border-radius: 15px;
+      max-width: 800px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      font-family: 'Georgia', serif;
+      border: 2px dashed #ccc;
+      text-align: left;
+      white-space: pre-line;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+<canvas id="confetti"></canvas>
+
+<div id="candle">
+  <div id="flame"></div>
+</div>
+
+<div class="message" id="birthday-message">
+  Make a wish and blow! 🌟✨
+</div>
+
+<div class="hearts" id="hearts" style="display: none;">
+  <div class="headline">Happy Birthday, Kyle!!^^ </div>
+  <div class="letter-container">
+    <div class="letter-body">
+
+Uhm…. So.. I’ve questioned whether I should still write this, especially after trying so hard to let things settle po, hehe.. :› Pero I made a quiet promise to myself po — that I’d greet you, no matter where we stand now. You’ve always held a space in my life that felt significant — not loud, not demanding. And while a lot has changed na po, I didn’t want to let this day pass without leaving a small trace of that. :›
+
+This isn’t meant to cross any line or disrupt your peace po. If it does, I’m really sorry. : ) That was never my intent. I just know I won’t get to hand you my letter, so I tried to write it here instead — just to keep my little promise to myself. :›
+
+I know you’re doing your best to move forward. So am I. Pero still, if you’ve achieved anything recently po — even the small things no one notices — congratulations. ^^ I really hope you’re proud of yourself. I am.
+
+I won’t pretend to know exactly where you are now — emotionally or otherwise — pero I hope you’re finding meaning in whatever you’re building. You’ve always had that quiet strength in you, you know? Even in moments you probably don’t realize. :›
+
+I hope okay lang sabihin 'to. : ) — not because I expect anything, but simply because they matter to me in their own quiet way. :› Not because I want to go back, but because I genuinely value what was. (haha, pls lemi say that) Sometimes, it’s enough to look back and appreciate something without needing to hold onto it. ^^
+
+And if ever life gets difficult, I hope you remember how far you’ve come po. You owe it to that past version of yourself — the one who kept going, even when it would’ve been easier to stop. You’re not here by accident. You’ve earned that space, even in moments of doubt.
+
+Keep choosing yourself po — not just for your big goals, but for the small wins too. Treat your life the way you’d care for your younger self: with patience, protection, and belief. :›
+
+And when the time comes that you reach whatever success looks like for you, I hope you also find joy that feels real. Not loud or showy — just steady and grounding. I hope you end up with people and places that feel like home.
+
+So yeah… this might be the last thing I’ll write. Maybe that’s the whole point — to leave this here quietly, without expecting anything else. :› But if it’s okay, let me carry this little space in my heart for a while longer, until it naturally fades. :›
+
+Small update, haha, in case you’re wondering: I’ll be studying po sa Los Baños soon. Just a quiet change, pero one I’ve been meaning to make. :› (though tbh still kinda unsure) sorry, skl hehe…
+
+Also, please kindly bear with my little coding attempt here — I’m still in the process of learning and growing in this, but I really wanted to try my best for this small project. :›
+
+So uhm.. Wherever life takes you po, I really hope it’s somewhere that feels like peace. :›
+
+Happy birthday again and good luck.
+
+— from someone who once admired you, Megan
+    </div>
+  </div>
+</div>
+
+<script>
+  const starCanvas = document.getElementById('stars');
+  const starCtx = starCanvas.getContext('2d');
+  const confettiCanvas = document.getElementById('confetti');
+  const confettiCtx = confettiCanvas.getContext('2d');
+  let W = window.innerWidth;
+  let H = window.innerHeight;
+  starCanvas.width = confettiCanvas.width = W;
+  starCanvas.height = confettiCanvas.height = H;
+
+  const stars = [];
+  for (let i = 0; i < 400; i++) {
+    stars.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      size: Math.random() * 1.5,
+      alpha: Math.random(),
+    });
+  }
+  function drawStars() {
+    starCtx.clearRect(0, 0, W, H);
+    stars.forEach(star => {
+      star.alpha += (Math.random() - 0.5) * 0.02;
+      if (star.alpha < 0) star.alpha = 0;
+      if (star.alpha > 1) star.alpha = 1;
+      starCtx.beginPath();
+      starCtx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+      starCtx.fillStyle = `rgba(255,255,255,${star.alpha})`;
+      starCtx.fill();
+    });
+    requestAnimationFrame(drawStars);
+  }
+  drawStars();
+
+  window.addEventListener("resize", () => {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    starCanvas.width = confettiCanvas.width = W;
+    starCanvas.height = confettiCanvas.height = H;
+  });
+
+  async function startBlowDetection() {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const mic = audioContext.createMediaStreamSource(stream);
+    const analyser = audioContext.createAnalyser();
+    analyser.fftSize = 2048;
+    mic.connect(analyser);
+    const data = new Uint8Array(analyser.fftSize);
+    let blowDetected = false;
+
+    function detectBlow() {
+      analyser.getByteTimeDomainData(data);
+      let total = 0;
+      for (let i = 0; i < data.length; i++) {
+        let val = (data[i] - 128) / 128;
+        total += val * val;
+      }
+      const rms = Math.sqrt(total / data.length);
+      if (rms > 0.07 && !blowDetected) {
+        blowDetected = true;
+        triggerBlow();
+      }
+      if (!blowDetected) {
+        requestAnimationFrame(detectBlow);
+      }
+    }
+    detectBlow();
+    setTimeout(() => {
+      if (!blowDetected) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+    }, 10000);
+  }
+
+  function triggerBlow() {
+    document.getElementById('flame').style.opacity = 0;
+    document.getElementById('hearts').style.display = 'block';
+    launchConfetti();
+  }
+
+  const confettiPieces = [];
+  function launchConfetti() {
+    for (let i = 0; i < 300; i++) {
+      confettiPieces.push({
+        x: W / 2,
+        y: H / 2,
+        radius: Math.random() * 6 + 4,
+        color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+        angle: Math.random() * 2 * Math.PI,
+        velocity: {
+          x: (Math.random() - 0.5) * 8,
+          y: (Math.random() - 0.5) * 8
+        },
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 10
+      });
+    }
+    requestAnimationFrame(updateConfetti);
+  }
+
+  function updateConfetti() {
+    confettiCtx.clearRect(0, 0, W, H);
+    confettiPieces.forEach(p => {
+      p.x += p.velocity.x;
+      p.y += p.velocity.y;
+      p.velocity.y += 0.2;
+      p.rotation += p.rotationSpeed;
+
+      confettiCtx.save();
+      confettiCtx.translate(p.x, p.y);
+      confettiCtx.rotate(p.rotation * Math.PI / 180);
+      confettiCtx.fillStyle = p.color;
+      confettiCtx.beginPath();
+      confettiCtx.fillRect(-p.radius/2, -p.radius/2, p.radius, p.radius);
+      confettiCtx.fill();
+      confettiCtx.restore();
+    });
+    requestAnimationFrame(updateConfetti);
+  }
+
+  startBlowDetection();
+</script>
+
+</body>
+</html>
